@@ -1,281 +1,267 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a id="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
+# Recurring Insights Button
 
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
+[![Version][version-shield]][version-url]
+[![Status][status-shield]][status-url]
+[![License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Recurring Insights Button</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A persistent, one-click financial intelligence layer for Claude + NetSuite MCP
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="#about-the-project"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="#getting-started">Get Started</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="#usage">View Usage Examples</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="#roadmap">Roadmap</a>
   </p>
 </div>
 
-
+---
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
+    <li><a href="#about-the-project">About the Project</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#setup">Setup</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#key-metrics">Key Metrics</a></li>
+    <li><a href="#guardrails">Guardrails & Safety</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
+---
 
+## About the Project
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+The **Recurring Insights Button** is a persistent prompt library feature built on top of Claude's NetSuite MCP connector. It appears as a dedicated button to the left of the `+` in the Claude chat interface — but only when the NetSuite MCP connector is active.
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+**The problem it solves:**
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Finance teams using Claude for ERP analysis today face a recurring friction: every session starts from scratch. Prompts must be rewritten, context must be re-established, and outputs vary in structure from period to period. This creates inefficiencies, inconsistent reporting, and zero institutional memory across time.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+**The solution:**
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people who have contributed to expanding this template!
+Recurring Insights lets users save structured prompts tied to key financial workflows — monthly cash flow analysis, variance tracking, budget-to-actual reporting — and execute them with a single click. Each saved prompt automatically retrieves the appropriate NetSuite data, applies consistent time logic, and generates standardized outputs that are directly comparable across periods.
 
-Use the `BLANK_README.md` to get started.
+> This transforms Claude from a one-off analytical tool into a persistent system of financial intelligence — embedding repeatability and memory directly into the workflow.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+---
 
+## How It Works
 
+```
+User saves a prompt → Prompt stored with time logic + NetSuite data scope
+       ↓
+User clicks Recurring Insights Button → One-click execution
+       ↓
+Claude pulls live NetSuite data via MCP → Applies saved prompt structure
+       ↓
+Standardized financial output with period-over-period comparison
+       ↓
+Output stored with full audit trail (prompt used, data retrieved, output generated)
+```
 
-### Built With
+**Three structural improvements over ad hoc sessions:**
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+| Benefit | Description |
+|---|---|
+| **Speed** | One-click execution eliminates time spent re-entering or re-contextualizing prompts each session |
+| **Consistency** | Standardized prompt structures produce comparable outputs across periods, enabling longitudinal tracking |
+| **Institutional Memory** | Saved prompts encode the analytical logic of finance teams, reducing knowledge loss and onboarding friction |
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Before using the Recurring Insights Button, ensure the following are in place:
 
-### Installation
+1. **Active Claude subscription** (Team or Enterprise plan recommended for finance workflows)
+2. **NetSuite MCP connector enabled** in Claude — the Recurring Insights Button will only appear in the UI when this connector is active
+3. **NetSuite Web Services API enabled** — requires a NetSuite administrator to enable in Setup → Company → Enable Features → SuiteCloud
+4. **OAuth 2.0 configured** in NetSuite — role-based permissions are mirrored into Claude at connection time
+5. **Active NetSuite session** — you must be logged into NetSuite in a separate browser tab for MCP authentication to persist
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+> ⚠️ **Note:** Initial MCP setup takes approximately 30–60 minutes for a NetSuite administrator with the correct permissions. Teams without dedicated IT support may need additional lead time.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
+### Setup
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+1. **Connect NetSuite MCP in Claude**
+   - Open Claude and click the `+` button in the chat interface
+   - Navigate to **Connectors → Manage Connectors**
+   - Enable the **NetSuite MCP** connector and complete OAuth 2.0 authentication
 
+2. **Verify the connection**
+   - Once connected, ask Claude: *"Are you connected to my NetSuite account?"*
+   - Claude will confirm available tools: Customers, Sales Orders, Inventory, Financial Reports, and Custom Queries
 
+3. **Access the Recurring Insights Button**
+   - With the NetSuite MCP connector active, the **Recurring Insights Button** will appear to the left of the `+` in the chat input bar
+   - Click it to open your saved prompt library or save a new recurring insight
 
-<!-- USAGE EXAMPLES -->
+4. **Save your first Recurring Insight**
+   - Run a financial analysis as you normally would (e.g., *"Run a cash flow analysis for the last 6 months"*)
+   - When satisfied with the output structure, click **Save as Recurring Insight**
+   - Name the insight (e.g., `Monthly Cash Flow — 6-Month Rolling`) and confirm
+
+---
+
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Running a saved Recurring Insight
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```
+1. Click the Recurring Insights Button (left of +)
+2. Select a saved insight from the library
+3. Click "Run" — Claude retrieves live NetSuite data and generates the output
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Example saved insights
 
+```
+Monthly Cash Flow Analysis — 6-Month Rolling
+Variance Analysis — Budget vs. Actual (Current Month)
+Period-Over-Period Revenue Comparison — QTD
+Accounts Receivable Aging Summary
+```
 
+### Example output (cash flow analysis)
 
-<!-- ROADMAP -->
+After running a saved cash flow insight, Claude generates:
+- Total revenue summary with trend direction
+- Monthly revenue bar chart with rolling trend line
+- Daily cash flow (last 30 days)
+- Month-over-month change chart
+- Key takeaways narrative with identified drivers
+
+> For full usage examples, see [Usage Examples](docs/usage-examples.md)
+
+---
+
+## Key Metrics
+
+The Recurring Insights Button is evaluated against the following success criteria:
+
+| Metric | Target | Description |
+|---|---|---|
+| **Recurring Insight Usage Rate** | ≥ 25% of active users within 6 months | Primary adoption signal — measures shift from ad hoc to workflow-embedded usage |
+| **Insight Accuracy** | ≥ 92% across eval dataset | Verified against NetSuite source data via MCP |
+| **Hallucination Rate** | < 2% on verifiable outputs | Numerics and period references checked programmatically |
+| **Latency (P50)** | < 3 seconds | Measured from prompt submission to first output token |
+| **Latency (P95)** | < 8 seconds | Monitored against the 10-second PRD requirement |
+| **Estimated Cost Per Query** | $0.008–$0.022 | Based on Claude Sonnet pricing at ~3,100 tokens per standard query |
+
+---
+
+## Guardrails & Safety
+
+### Access Control
+
+All NetSuite data access is governed by the user's existing OAuth 2.0 role and permission scope. Claude mirrors these permissions at connection time — a Controller cannot surface payroll data they cannot access in NetSuite directly, and a Finance Manager cannot query entities outside their assigned business unit.
+
+> Access control is enforced upstream at the data source, not downstream at the output stage.
+
+### Prompt Injection Detection
+
+Saved prompts represent a persistent attack surface. All user-submitted prompt content is scanned at save time for patterns consistent with:
+- Instruction override attempts
+- Data exfiltration queries
+- Unauthorized scope access
+
+Flagged prompts are blocked and surfaced to the compliance team for review.
+
+### OAuth Scope Re-validation
+
+Saved prompts re-validate OAuth scopes at **execution time**, not only at creation time. If a user's NetSuite permissions change after a prompt is saved (e.g., role change, promotion, entity reassignment), the prompt will execute only within the user's current authorized scope.
+
+### Auditability
+
+All Recurring Insight executions are stored with full traceability:
+- The prompt used
+- The NetSuite data retrieved
+- The output generated
+- Timestamp and user identity
+
+This audit trail supports financial compliance requirements and enables root cause analysis when outputs are flagged as incorrect.
+
+### Output Grounding
+
+All quantitative outputs are grounded in live ERP data retrieved via MCP at query time. Any output that cannot be grounded in a live NetSuite data pull is flagged as unverified and rendered with an explicit caveat to the user.
+
+---
+
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [x] NetSuite MCP connector (base)
+- [x] Natural language financial queries
+- [x] Interactive cash flow dashboard output
+- [ ] Recurring Insights Button — save and execute prompts
+- [ ] Period-aware time logic (auto-increments on monthly execution)
+- [ ] Prompt library management UI (rename, delete, reorder)
+- [ ] Insight scheduling (auto-run on the 1st of each month)
+- [ ] NetSuite BI visualization upsell integration
+- [ ] Multi-entity consolidation support for complex queries
+- [ ] Slack / email delivery of recurring output
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](issues-url) for a full list of proposed features and known issues.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+---
 
-
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are welcome. If you have a suggestion that would improve this feature, please fork the repo and open a pull request, or open an issue with the tag `enhancement`.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/RecurringInsightEnhancement`)
+3. Commit your changes (`git commit -m 'Add scheduling support for recurring insights'`)
+4. Push to the branch (`git push origin feature/RecurringInsightEnhancement`)
 5. Open a Pull Request
 
-### Top contributors:
+---
 
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
-</a>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
 ## License
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+Distributed under the Anthropic Enterprise License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+---
 
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+- [Anthropic Claude](https://www.anthropic.com) — underlying LLM and constitutional AI framework
+- [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol) — open standard enabling secure enterprise data integration
+- [Oracle NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite) — ERP data source and OAuth 2.0 authentication layer
+- [Best-README-Template](https://github.com/othneildrew/Best-README-Template) — README structure
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+<!-- MARKDOWN LINKS -->
+[version-shield]: https://img.shields.io/badge/version-0.1.0--beta-blue?style=for-the-badge
+[version-url]: #
+[status-shield]: https://img.shields.io/badge/status-experiment-orange?style=for-the-badge
+[status-url]: #
+[license-shield]: https://img.shields.io/badge/license-Anthropic%20Enterprise-lightgrey?style=for-the-badge
+[license-url]: #
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[linkedin-url]: https://linkedin.com

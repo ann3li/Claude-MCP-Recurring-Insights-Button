@@ -21,6 +21,8 @@
     &middot;
     <a href="#usage">View Usage Examples</a>
     &middot;
+    <a href="#prototype">View Prototype</a>
+    &middot;
     <a href="#roadmap">Roadmap</a>
   </p>
 </div>
@@ -41,6 +43,20 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li>
+      <a href="#prototype">Prototype: How It Was Built</a>
+      <ul>
+        <li><a href="#design-goals">Design Goals</a></li>
+        <li><a href="#tech-stack">Tech Stack</a></li>
+        <li><a href="#file-architecture">File Architecture</a></li>
+        <li><a href="#design-system">Design System</a></li>
+        <li><a href="#component-the-button">Component: The Button</a></li>
+        <li><a href="#component-the-dropdown">Component: The Dropdown</a></li>
+        <li><a href="#component-the-dashboards">Component: The Dashboards</a></li>
+        <li><a href="#interaction-flow">Interaction Flow</a></li>
+        <li><a href="#design-decisions">Key Design Decisions</a></li>
+      </ul>
+    </li>
     <li><a href="#key-metrics">Key Metrics</a></li>
     <li><a href="#guardrails">Guardrails & Safety</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -54,7 +70,7 @@
 
 ## About the Project
 
-The **Recurring Insights Button** is a persistent prompt library feature built on top of Claude's NetSuite MCP connector. It appears as a dedicated button to the left of the `+` in the Claude chat interface — but only when the NetSuite MCP connector is active.
+The **Recurring Insights Button** is a persistent prompt library feature built on top of Claude's NetSuite MCP connector. It appears as a dedicated button to the right of the `+` in the Claude chat interface — but only when the NetSuite MCP connector is active.
 
 **The problem it solves:**
 
@@ -118,7 +134,7 @@ Before using the Recurring Insights Button, ensure the following are in place:
    - Claude will confirm available tools: Customers, Sales Orders, Inventory, Financial Reports, and Custom Queries
 
 3. **Access the Recurring Insights Button**
-   - With the NetSuite MCP connector active, the **Recurring Insights Button** will appear to the left of the `+` in the chat input bar
+   - With the NetSuite MCP connector active, the **Recurring Insights Button** will appear to the right of the `+` in the chat input bar
    - Click it to open your saved prompt library or save a new recurring insight
 
 4. **Save your first Recurring Insight**
@@ -133,7 +149,7 @@ Before using the Recurring Insights Button, ensure the following are in place:
 ### Running a saved Recurring Insight
 
 ```
-1. Click the Recurring Insights Button (left of +)
+1. Click the Recurring Insights Button (right of +)
 2. Select a saved insight from the library
 3. Click "Run" — Claude retrieves live NetSuite data and generates the output
 ```
@@ -143,20 +159,317 @@ Before using the Recurring Insights Button, ensure the following are in place:
 ```
 Monthly Cash Flow Analysis — 6-Month Rolling
 Variance Analysis — Budget vs. Actual (Current Month)
-Period-Over-Period Revenue Comparison — QTD
 Accounts Receivable Aging Summary
 ```
 
 ### Example output (cash flow analysis)
 
 After running a saved cash flow insight, Claude generates:
-- Total revenue summary with trend direction
-- Monthly revenue bar chart with rolling trend line
-- Daily cash flow (last 30 days)
-- Month-over-month change chart
-- Key takeaways narrative with identified drivers
+- Total inflow / outflow / net cash position KPI cards
+- Monthly cash flow bar chart with overlaid net cash flow trend line
+- Top inflow and outflow sources tables
+- Monthly net cash flow table with positive / negative status pills
+- Narrative summary highlighting anomalies and key drivers
+- Follow-up suggestion chips for deeper drill-downs
 
-> For full usage examples, see [Usage Examples](docs/usage-examples.md)
+---
+
+## Prototype
+
+A clickable, interactive prototype of the Recurring Insights Button was built as a single-file HTML artifact (`recurring_insights_prototype.html`) to demonstrate the feature concept end-to-end — from the resting state in the Claude UI, through the dropdown menu, into all three fully-rendered saved insight outputs.
+
+### Design Goals
+
+The prototype was scoped to deliver four things:
+
+1. **Pixel-credible Claude UI** — Match the existing Claude chat interface (sidebar, composer, typography, color palette, greeting screen) closely enough that the new button feels like a native addition rather than a mockup overlay.
+2. **The button itself** — Place a visually distinct "Recurring Insights" button immediately to the right of the `+` button in the composer, with an icon, label, and a count badge indicating saved insights.
+3. **Three complete saved insight outputs** — Render the full dashboard for each of the three saved prompts (monthly cash flow, budget vs. actual variance, AR aging summary) with real-looking data, KPI cards, charts, and tables.
+4. **Laptop aspect ratio** — Frame the entire prototype in a 16:10 laptop viewport so the demo can be screen-recorded or screenshotted in context.
+
+### Tech Stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| **Markup / Layout** | Single-file HTML | Portable; opens in any browser; no build step |
+| **Styling** | Plain CSS with CSS variables | Full control over Claude's design tokens; no Tailwind dependency drift |
+| **Typography** | Copernicus (serif) + Styrene A / Inter (sans) via Google Fonts | Mirrors Claude's actual font stack |
+| **Charts** | Chart.js 4.4 via CDN | Lightweight, declarative, supports mixed bar + line charts |
+| **Interactivity** | Vanilla JavaScript | No framework overhead; ~250 lines of logic |
+| **Icons** | Inline SVG | No icon library; precise control over stroke weight |
+
+### File Architecture
+
+The entire prototype lives in one file. The structure is:
+
+```
+recurring_insights_prototype.html
+├── <style>                       ← Design tokens + component styles
+│   ├── CSS variables             ← Claude color palette, fonts, shadows
+│   ├── Laptop frame              ← 16:10 aspect ratio container
+│   ├── Sidebar                   ← Left nav with icons
+│   ├── Composer                  ← Input bar with + and Recurring Insights buttons
+│   ├── Dropdown menu             ← Saved insights list
+│   ├── Chat view                 ← Scrollable conversation area
+│   ├── Dashboard primitives      ← KPI cards, chart cards, table cards
+│   └── Status pills              ← negative / positive / partial / critical
+├── <body>
+│   ├── Laptop frame              ← Outer container with shadow
+│   ├── Sidebar                   ← Static nav icons
+│   └── Main
+│       ├── Topbar                ← Title + back button
+│       ├── Home view             ← Greeting + composer (default state)
+│       ├── Chat view             ← Hidden until an insight is run
+│       └── Dropdown menu         ← Hidden until button is clicked
+└── <script>                      ← ~250 lines
+    ├── Menu toggle               ← Open/close dropdown, position relative to button
+    ├── Navigation                ← Switch between home and chat views
+    └── Insight runners           ← renderCashflow(), renderVariance(), renderAR()
+```
+
+### Design System
+
+All visual decisions are encoded as CSS custom properties at the top of the stylesheet. This made it easy to keep the entire prototype in lockstep with Claude's actual UI:
+
+```css
+:root {
+  --bg:        #F9F8F4;       /* Claude warm cream background */
+  --surface:   #FFFFFF;
+  --surface-2: #F5F4EE;
+  --border:    #E8E6DC;
+  --ink:       #1F1E1B;
+  --muted:     #8C8A82;
+  --accent:    #D97757;       /* Claude orange */
+  --accent-2:  #C26544;
+  --accent-bg: #FBEEE6;
+  --blue:      #2C84DB;
+  --green:     #2F9E6B;
+  --red:       #D85C5C;
+  --amber:     #D89744;
+  --serif:    "Copernicus", "Tiempos Headline", "Georgia", serif;
+  --sans:     "Styrene A", "Inter", -apple-system, sans-serif;
+}
+```
+
+The 16:10 laptop frame is a single rule:
+
+```css
+.laptop {
+  width: 100%;
+  max-width: 1440px;
+  aspect-ratio: 16 / 10;
+  background: var(--bg);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+  display: grid;
+  grid-template-columns: 56px 1fr;
+}
+```
+
+### Component: The Button
+
+The Recurring Insights button is the centerpiece. It sits inside the composer row, immediately to the right of the `+` button, and is given a warm gradient and an orange accent to make it visually distinct without breaking Claude's restrained palette.
+
+**Markup:**
+
+```html
+<div class="composer-left">
+  <!-- + button -->
+  <button class="pill-btn" id="plusBtn" title="Attach">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>
+  </button>
+
+  <!-- NEW: Recurring Insights button -->
+  <button class="pill-btn insights-btn" id="insightsBtn"
+          title="Recurring Insights">
+    <svg class="sparkle" width="14" height="14" viewBox="0 0 24 24"
+         fill="currentColor">
+      <path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8z"/>
+      <path d="M19 14l.7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7z"
+            opacity="0.7"/>
+    </svg>
+    <span>Recurring Insights</span>
+    <span class="badge">3</span>
+  </button>
+</div>
+```
+
+**Styling:** the button uses Claude's orange (`--accent`) for the sparkle icon and a soft peach gradient background. On hover it lifts slightly with a shadow — a small touch that signals "this does something special":
+
+```css
+.insights-btn {
+  position: relative;
+  background: linear-gradient(135deg, #FFF8F2 0%, #FBEEE6 100%);
+  border: 1px solid #F0D4C0;
+  color: var(--accent-2);
+  font-weight: 500;
+}
+.insights-btn:hover {
+  background: linear-gradient(135deg, #FBEEE6 0%, #F5DDC9 100%);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(217, 119, 87, 0.18);
+}
+.insights-btn .badge {       /* small "3" pill in the corner */
+  position: absolute;
+  top: -4px; right: -4px;
+  width: 14px; height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+```
+
+### Component: The Dropdown
+
+Clicking the button opens a dropdown menu listing the three saved insights, each with its own icon, name, time scope, and "last run" timestamp. Below the list is a divider and a "Save current prompt as insight" affordance that hints at the broader save flow.
+
+The menu is positioned dynamically relative to the button (so it works on both the home composer and the chat composer):
+
+```javascript
+function positionMenu() {
+  const btn = document.querySelector('.chat-view.active')
+    ? document.querySelector('.chat-composer .insights-btn')
+    : insightsBtn;
+  const main = document.querySelector('.main');
+  const r = btn.getBoundingClientRect();
+  const mainR = main.getBoundingClientRect();
+  menu.style.left = (r.left - mainR.left) + 'px';
+  menu.style.bottom = (mainR.bottom - r.top + 8) + 'px';
+}
+```
+
+Each menu item routes to one of the three insight renderers:
+
+```html
+<div class="menu-item" onclick="runInsight('cashflow')">
+  <div class="icon cash">...</div>
+  <div class="meta">
+    <div class="name">Monthly cash flow</div>
+    <div class="sub">Last 6 months · NetSuite</div>
+  </div>
+  <div class="last">2d ago</div>
+</div>
+```
+
+### Component: The Dashboards
+
+Each saved insight renders a full mock Claude response when run. The three dashboards share a common dashboard grammar:
+
+| Element | Used For |
+|---|---|
+| **KPI row** (4 cards) | Headline numbers — total inflow, variance, total open AR, etc. |
+| **Chart card** (Chart.js) | Bar / line / mixed visualizations |
+| **Table card** | Detailed period-over-period or bucket-level data |
+| **Status pills** | `negative` / `positive` / `above` / `partial` / `critical` |
+| **Follow-up chips** | Suggested drill-down prompts beneath the dashboard |
+| **Narrative summary** | Serif prose block explaining the findings |
+
+For example, the cash flow chart uses a mixed bar + line dataset to show inflow, outflow, and net cash flow on the same axis:
+
+```javascript
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26','May 26'],
+    datasets: [
+      { label: 'Inflow',  data: [666, 1640, 1920, 2170, 626, 1050, 612],
+        backgroundColor: '#5BB890', borderRadius: 4 },
+      { label: 'Outflow', data: [-948, -1930, -2070, -3510, -212, -188, -540],
+        backgroundColor: '#E89090', borderRadius: 4 },
+      { label: 'Net', type: 'line',
+        data: [-283, -297, -154, -1333, 415, 862, 72],
+        borderColor: '#3B82F6', borderDash: [4,3], pointRadius: 4 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { ticks: { callback: v => '$' + v + 'K' } }
+    }
+  }
+});
+```
+
+The variance dashboard reuses the same grammar but with budget / actual / variance datasets; the AR aging dashboard adds a custom horizontal stacked bar (the "aging distribution") built with flexbox rather than Chart.js because the visual is simpler than a charting library would make it.
+
+### Interaction Flow
+
+The prototype is fully clickable. The user journey is:
+
+```
+Home screen
+  └── Click "Recurring Insights" button
+        └── Dropdown opens, positioned above the button
+              └── Click "Monthly cash flow"
+                    └── Loading state: "Running saved insight…"
+                          └── Full cash flow dashboard renders (KPIs, chart,
+                              tables, narrative, follow-up chips)
+                                └── Click "← Back" to return home
+                                      └── Repeat with another saved insight
+```
+
+The state machine is intentionally minimal — three functions handle the rendering, and a single `showChat()` swaps the home view for the chat view:
+
+```javascript
+function runInsight(kind) {
+  if (kind === 'cashflow') {
+    showChat('Monthly cash flow');
+    renderCashflow();
+  } else if (kind === 'variance') {
+    showChat('Budget vs. actual variance');
+    renderVariance();
+  } else if (kind === 'ar') {
+    showChat('AR aging summary');
+    renderAR();
+  }
+}
+```
+
+Each renderer first paints a loading state, then replaces it with the full dashboard after a short delay — mimicking the real Claude experience of seeing MCP commands run before the final output streams in:
+
+```javascript
+function renderCashflow() {
+  chatScroll.innerHTML = userMsg('Using my NetSuite data, run a financial cash flow analysis on the last 6 months');
+  chatScroll.innerHTML += running('Running saved insight · pulling NetSuite GL data…');
+  setTimeout(() => {
+    chatScroll.innerHTML = userMsg(...) + dashboardHTML;
+    drawCashflowChart();
+  }, 900);
+}
+```
+
+### Design Decisions
+
+A few choices worth flagging:
+
+**1. Button placement: right of `+`, not left.**
+The original concept doc placed the button to the left of `+`. In the prototype it sits to the right because that position groups it visually with the other composer actions (model selector, send button on the right side of the composer) rather than pushing it to the far edge where it could be mistaken for a sidebar element.
+
+**2. The button is always visible in the prototype.**
+In production, the button would only appear when the NetSuite MCP connector is active. The prototype renders it unconditionally so the demo can show the feature without first walking through the MCP setup flow.
+
+**3. Loading states are deliberately slow (~900ms).**
+Real MCP queries take 3–8 seconds. The prototype compresses this to under a second so the demo feels responsive, but keeps a visible loading pill so the audience understands that real execution involves a roundtrip to NetSuite.
+
+**4. The data is hard-coded but matches the source screenshots.**
+All numbers in the three dashboards are pulled directly from the reference screenshots in `/mnt/project/`. This keeps the prototype credible as a representation of real Claude + NetSuite output without requiring a live MCP connection.
+
+**5. No build step.**
+The entire prototype is one HTML file. Open it in a browser, it works. This was a deliberate choice to keep the prototype shareable, screen-recordable, and easy to iterate on without dependency management.
+
+### Running the Prototype
+
+```bash
+# Just open the file in any modern browser
+open recurring_insights_prototype.html
+```
+
+No installation, no npm, no build. The only network dependency is Chart.js and Google Fonts via CDN.
 
 ---
 
@@ -217,7 +530,8 @@ All quantitative outputs are grounded in live ERP data retrieved via MCP at quer
 - [x] NetSuite MCP connector (base)
 - [x] Natural language financial queries
 - [x] Interactive cash flow dashboard output
-- [ ] Recurring Insights Button — save and execute prompts
+- [x] Clickable HTML prototype of the Recurring Insights Button
+- [ ] Recurring Insights Button — save and execute prompts (production)
 - [ ] Period-aware time logic (auto-increments on monthly execution)
 - [ ] Prompt library management UI (rename, delete, reorder)
 - [ ] Insight scheduling (auto-run on the 1st of each month)
@@ -252,6 +566,7 @@ Distributed under the Anthropic Enterprise License. See `LICENSE.txt` for more i
 - [Anthropic Claude](https://www.anthropic.com) — underlying LLM and constitutional AI framework
 - [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol) — open standard enabling secure enterprise data integration
 - [Oracle NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite) — ERP data source and OAuth 2.0 authentication layer
+- [Chart.js](https://www.chartjs.org) — charting library used in the prototype
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template) — README structure
 
 ---
